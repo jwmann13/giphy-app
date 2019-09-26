@@ -1,7 +1,7 @@
 $(document).ready(() => {
     renderButtons();
 
-    $('#gifs').on('click', '.gif', function (event) {
+    $('#gifs').on('click', '.gifContainer,.gif,.overlay,.text', function (event) {
         // console.log(event);
         // console.log('clicked', $(this));
         let state = $(this).data('state');
@@ -51,8 +51,8 @@ function renderButtons() {
 }
 
 function createGifDiv(element) {
-    let imgURLStill = element.images.fixed_height_still.url;
-    let imgURLAnimate = element.images.fixed_height.url;
+    let imgURLStill = element.images.fixed_width_still.url;
+    let imgURLAnimate = element.images.fixed_width.url;
     let rating = element.rating;
     // console.log(imgURLStill)
     let gifContainer = $('<div>').addClass('gifContainer');
