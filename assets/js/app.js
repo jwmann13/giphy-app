@@ -1,14 +1,7 @@
 $(document).ready(() => {
-    let topics = ["penguins", "cats", "owls", "hamsters", "dogs", "ducks"];
+    renderButtons();
 
-    for (let i = 0; i < topics.length; i++) {
-        const element = topics[i];
-        let button = $('<button>').addClass('btn btn-dark m-2').attr('data-topic', element);
-        button.text(element);
-        $('#buttons').append(button);
-    }
-
-    $('.container').on('click', '.gif', function (event) {
+    $('#gifs').on('click', '.gif', function (event) {
         // console.log(event);
         // console.log('clicked', $(this));
         let state = $(this).data('state');
@@ -19,7 +12,7 @@ $(document).ready(() => {
         }
     });
 
-    $('button').on('click', function (event) {
+    $('#buttons').on('click', '.gifBtn', function (event) {
         let apiKey = "QOFN0QbeSz8WpxqX33mOir8ublOe8djd";
         let queryURL = `https://api.giphy.com/v1/gifs/search?limit=10&api_key=${apiKey}&q=${$(this).data('topic')}`;
         $.ajax({
@@ -38,9 +31,29 @@ $(document).ready(() => {
                     'data-animate': imgURLAnimate,
                     'data-state': 'still'
                 });
-                $('#gifs').append(image);
-                // console.log(response);
+                let rating = $('<p>').addClass('rating').html("rated: " + element.rating)
+                $('#gifs').append(image, rating);
+                console.log(response);
             }
         });
     });
+
+    $('input.btn').on('click', function (event) {
+        event.preventDefault();
+        let input = $('#newButton').val();
+        let newBtn = $('<button>').addClass('btn btn-dark m-2 gifBtn').attr('data-topic', input)
+        newBtn.text(input);
+        $('#buttons').append(newBtn);
+    });
 });
+
+function renderButtons() {
+    let topics = ["penguins", "cats", "owls", "hamsters", "dogs", "ducks"];
+    $('#buttons').empty();
+    for (let i = 0; i < topics.length; i++) {
+        const element = topics[i];
+        let button = $('<button>').addClass('btn btn-dark m-2 gifBtn').attr('data-topic', element);
+        button.text(element);
+        $('#buttons').append(button);
+    }
+}
