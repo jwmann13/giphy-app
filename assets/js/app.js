@@ -22,18 +22,8 @@ $(document).ready(() => {
             $('#gifs').empty();
             for (let i = 0; i < response.data.length; i++) {
                 const element = response.data[i];
-                let imgURLStill = element.images.fixed_height_still.url;
-                let imgURLAnimate = element.images.fixed_height.url;
-                // console.log(imgURLStill)
-                let image = $('<img>').addClass('gif').attr({
-                    'src': imgURLStill,
-                    'data-still': imgURLStill,
-                    'data-animate': imgURLAnimate,
-                    'data-state': 'still'
-                });
-                let rating = $('<p>').addClass('rating').html("rated: " + element.rating)
-                $('#gifs').append(image, rating);
-                console.log(response);
+                createGifDiv(element);
+                // console.log(response);
             }
         });
     });
@@ -41,9 +31,11 @@ $(document).ready(() => {
     $('input.btn').on('click', function (event) {
         event.preventDefault();
         let input = $('#newButton').val();
-        let newBtn = $('<button>').addClass('btn btn-dark m-2 gifBtn').attr('data-topic', input)
-        newBtn.text(input);
-        $('#buttons').append(newBtn);
+        if (input != '') {
+            let newBtn = $('<button>').addClass('btn btn-dark m-2 gifBtn').attr('data-topic', input)
+            newBtn.text(input);
+            $('#buttons').append(newBtn);
+        }
     });
 });
 
@@ -56,4 +48,20 @@ function renderButtons() {
         button.text(element);
         $('#buttons').append(button);
     }
+}
+
+function createGifDiv(element) {
+    let imgURLStill = element.images.fixed_height_still.url;
+    let imgURLAnimate = element.images.fixed_height.url;
+    let rating = element.rating;
+    // console.log(imgURLStill)
+    let gifContainer = $('<div>').addClass('gifContainer');
+    let image = $('<img>').addClass('gif').attr({
+        'src': imgURLStill,
+        'data-still': imgURLStill,
+        'data-animate': imgURLAnimate,
+        'data-state': 'still'
+    });
+    let overlay = $('<div>').addClass('overlay').append($('<div>').addClass('text').html('rated: ' + rating));
+    gifContainer.append(image, overlay).appendTo('#gifs');
 }
