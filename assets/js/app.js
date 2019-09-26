@@ -14,7 +14,7 @@ $(document).ready(() => {
 
     $('#buttons').on('click', '.gifBtn', function (event) {
         let apiKey = "QOFN0QbeSz8WpxqX33mOir8ublOe8djd";
-        let queryURL = `https://api.giphy.com/v1/gifs/search?limit=10&api_key=${apiKey}&q=${$(this).data('topic')}`;
+        let queryURL = `https://api.giphy.com/v1/gifs/search?limit=30&api_key=${apiKey}&q=${$(this).data('topic')}`;
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -32,9 +32,7 @@ $(document).ready(() => {
         event.preventDefault();
         let input = $('#newButton').val();
         if (input != '') {
-            let newBtn = $('<button>').addClass('btn btn-dark m-2 gifBtn').attr('data-topic', input)
-            newBtn.text(input);
-            $('#buttons').append(newBtn);
+            createButton(input);
         }
     });
 });
@@ -44,9 +42,7 @@ function renderButtons() {
     $('#buttons').empty();
     for (let i = 0; i < topics.length; i++) {
         const element = topics[i];
-        let button = $('<button>').addClass('btn btn-dark m-2 gifBtn').attr('data-topic', element);
-        button.text(element);
-        $('#buttons').append(button);
+        createButton(element);
     }
 }
 
@@ -54,7 +50,9 @@ function createGifDiv(element) {
     let imgURLStill = element.images.fixed_width_still.url;
     let imgURLAnimate = element.images.fixed_width.url;
     let rating = element.rating;
-    // console.log(imgURLStill)
+    let source = element.source;
+    let title = parseGifTitle(element.title);
+    // console.log(element)
     let gifContainer = $('<div>').addClass('gifContainer');
     let image = $('<img>').addClass('gif').attr({
         'src': imgURLStill,
@@ -62,6 +60,17 @@ function createGifDiv(element) {
         'data-animate': imgURLAnimate,
         'data-state': 'still'
     });
-    let overlay = $('<div>').addClass('overlay').append($('<div>').addClass('text').html('rated: ' + rating));
+    let overlay = $('<div>').addClass('overlay').append($('<div>').addClass('text').html('"'+ title +'"</br>rated: ' + rating + '</br><a href="' + source +'">Source</a>'));
     gifContainer.append(image, overlay).appendTo('#gifs');
+}
+
+function createButton(input){
+    let button = $('<button>').addClass('btn btn-dark my-2 gifBtn').attr('data-topic', input);
+        button.text(input);
+        $('#buttons').append(button);
+}
+
+function parseGifTitle(title){
+    let output = title.replace(" GIF", "");
+    return output;
 }
