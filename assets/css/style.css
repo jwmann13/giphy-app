@@ -1,3 +1,7 @@
+.input {
+  background: #ffffffff;
+}
+
 #gifs {
   line-height: 0;
   -webkit-column-count: 5;
@@ -53,7 +57,7 @@
   text-decoration: none;
 }
 
-.text:hover a {
+.text a:hover {
   color: #555555;
   text-decoration: underline;
 }
