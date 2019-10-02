@@ -40,7 +40,6 @@ $(document).ready(() => {
         }).then(function (response) {
             renderGifs(response)
         });
-        console.log(section)
     });
 
     // click listener to create new submission buttons

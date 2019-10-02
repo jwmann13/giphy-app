@@ -1,18 +1,23 @@
-const header = document.querySelector('.input')
-const section = $('#gifs')[0].children;
-const topSentinel = section[0];
-const bottomSentinel = section[section.length-1];
+let gifs = document.querySelectorAll('.gif');
 
-const sectionObserver = new IntersectionObserver(function(entries, sectionObserver){
+let sectionObserver = new IntersectionObserver(function(entries){
   entries.forEach(entry => {
     if (!entry.isIntersecting){
+      console.log(entry)
       console.log('hello');
     } else {
+      console.log(entry.target.children)
       console.log('goodbye');
     }
   })
+}, {
+  root: null,
+  rootMargin: '-50px 0px'
 });
 
-// sectionObserver.observe(topSentinel);
+gifs.forEach(gif => { sectionObserver.observe(gif) })
 
-console.log(topSentinel);
+// sectionObserver.observe()
+// document.querySelector('.gif').forEach(gif => {
+//   sectionObserver.observe(gif)
+// });
