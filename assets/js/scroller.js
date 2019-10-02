@@ -6,9 +6,9 @@ const bottomSentinel = section[section.length-1];
 const sectionObserver = new IntersectionObserver(function(entries, sectionObserver){
   entries.forEach(entry => {
     if (!entry.isIntersecting){
-      console.log('fart');
+      console.log('hello');
     } else {
-      console.log('poot');
+      console.log('goodbye');
     }
   })
 });
