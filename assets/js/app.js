@@ -33,7 +33,7 @@ $(document).ready(() => {
     // click listener to load gifs
     $('#buttons').on('click', '.gifBtn', function (event) {
         const apiKey = "QOFN0QbeSz8WpxqX33mOir8ublOe8djd";
-        let queryURL = `https://api.giphy.com/v1/gifs/search?limit=30&api_key=${apiKey}&q=${$(this).data('topic')}`;
+        let queryURL = `https://api.giphy.com/v1/gifs/search?limit=10&api_key=${apiKey}&q=${$(this).data('topic')}`;
         $.ajax({
             url: queryURL,
             method: "GET"
